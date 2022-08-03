@@ -53,6 +53,26 @@ export default {
 
 <style lang="stylus">
 
+body
+  display flex
+  justify-content center
+  align-items center
+
+  margin 0 auto
+
+.container
+  width 500px
+  height 300px
+
+  padding 10px
+
+  border 1px solid gray
+  border-radius 100px
+  transition box-shadow 0.5s linear
+
+.container:hover
+  box-shadow 2px 10px 10px gray
+
 .Title
   text-align center
   font-size 40px
