@@ -24,7 +24,7 @@
             <a href="#">Забыли пароль?</a>
           </div>
           <div class="footer-dialog">
-            <vs-button block>
+            <vs-button @click.prevent="login" block>
               Войти
             </vs-button>
 
@@ -38,6 +38,8 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
@@ -47,7 +49,19 @@ export default {
     password: '',
     remember: false,
     option2: false,
-  })
+  }),
+
+  methods: {
+    login() {
+      axios.post("http://127.0.0.1:8000/api/auth/login", {
+        email: this.email,
+        password: this.password
+      })
+          .then( res => {
+            localStorage.access_token = res.data.access_token;
+          })
+    }
+  }
 }
 </script>
 
