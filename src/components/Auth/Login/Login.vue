@@ -11,7 +11,7 @@
           </vs-input>
           <vs-input type="password" v-model="password" placeholder="Пароль">
             <template #icon>
-              <img src="../../../assets/lock.png" width="25" />
+              <img width="20" src="../../../assets/lock.png">
             </template>
           </vs-input>
           <div class="flex">
@@ -29,7 +29,7 @@
             </vs-button>
 
             <div class="new">
-              Нет аккаунта? <a href="#">Создайть аккаунт!</a>
+              Нет аккаунта? <a href="#">Создать аккаунт!</a>
             </div>
           </div>
         </div>
@@ -40,7 +40,7 @@
 <script>
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Login",
+  name: 'Login',
   data: () => ({
     active: false,
     email: '',
@@ -58,7 +58,7 @@ body
   justify-content center
   align-items center
 
-  margin 0 auto
+  margin-top 150px
 
 .container
   width 500px

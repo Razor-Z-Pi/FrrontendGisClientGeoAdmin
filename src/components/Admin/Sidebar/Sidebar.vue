@@ -4,10 +4,11 @@
 
 <script>
 export default {
+  // eslint-disable-next-line vue/multi-word-component-names
   name: "Sidebar",
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>
