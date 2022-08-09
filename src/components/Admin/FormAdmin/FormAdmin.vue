@@ -3,12 +3,12 @@
     <vs-navbar shadow square center-collapsed v-model="active">
       <template #left>
         <vs-button @click="activeSidebar = !activeSidebar" flat icon>
-          <img src="../../../assets/menuBurger.png" width="25" alt="Меню навигации" />
+          <img src="../../../assets/menuBurger.png" width="25" alt="Меню навигации"/>
           <div style="color: black">Меню</div>
         </vs-button>
       </template>
       <template #right>
-        <vs-button flat >Login</vs-button>
+        <vs-button flat>Login</vs-button>
         <vs-button>Get Started</vs-button>
       </template>
     </vs-navbar>
@@ -22,13 +22,13 @@
       </template>
       <vs-sidebar-item id="home">
         <template #icon>
-          <img src="../../../assets/gis.png" width="25" alt="Карта" />
+          <img src="../../../assets/gis.png" width="25" alt="Карта"/>
         </template>
         Карта
       </vs-sidebar-item>
       <vs-sidebar-item id="market">
         <template #icon>
-          <img src="../../../assets/magazine.png" width="25" alt="Лицензии" />
+          <img src="../../../assets/magazine.png" width="25" alt="Лицензии"/>
         </template>
         Лицензии
       </vs-sidebar-item>
@@ -36,7 +36,7 @@
         <template #header>
           <vs-sidebar-item arrow>
             <template #icon>
-              <img src="../../../assets/magazine.png" width="25" alt="Услуги" />
+              <img src="../../../assets/magazine.png" width="25" alt="Услуги"/>
             </template>
             Услуги
           </vs-sidebar-item>
@@ -56,7 +56,7 @@
         <template #header>
           <vs-sidebar-item arrow>
             <template #icon>
-              <img src="../../../assets/help.png" width="25" alt="Поддержка" />
+              <img src="../../../assets/help.png" width="25" alt="Поддержка"/>
             </template>
             Поддержка
           </vs-sidebar-item>
@@ -74,7 +74,7 @@
       </vs-sidebar-group>
       <vs-sidebar-item id="donate">
         <template #icon>
-          <i class='bx bxs-donate-heart' ></i>
+          <i class='bx bxs-donate-heart'></i>
         </template>
         Статьи
       </vs-sidebar-item>
@@ -85,15 +85,15 @@
         Магазин
       </vs-sidebar-item>
       <vs-sidebar-item id="shopping">
-        <template #icon>
-          <img src="../../../assets/user.png" width="25" alt="Профиль" />
-        </template>
-        Профиль
+          <template #icon>
+            <img src="../../../assets/user.png" width="25" alt="Профиль"/>
+          </template>
+        <router-link to="/profile">Профиль</router-link>
       </vs-sidebar-item>
       <template #footer>
         <vs-row justify="space-between">
           <vs-avatar badge-color="danger" badge-position="top-right">
-            <img src="../../../assets/message.png" width="10" alt="Сообщение" />
+            <img src="../../../assets/message.png" width="10" alt="Сообщение"/>
 
             <template #badge>
               0
@@ -107,7 +107,7 @@
 
 <script>
 export default {
-  data:() => ({
+  data: () => ({
     active: 'home',
     activeSidebar: false
   })
