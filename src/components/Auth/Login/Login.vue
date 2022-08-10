@@ -33,6 +33,7 @@
             </div>
           </div>
         </div>
+        <div v-if="error">{{openNotification('top-left', 'danger')}}</div>
       </div>
   </section>
 </template>
@@ -49,6 +50,7 @@ export default {
     password: '',
     remember: false,
     option2: false,
+    error: null
   }),
 
   methods: {
@@ -61,6 +63,18 @@ export default {
             localStorage.access_token = res.data.access_token;
             this.$router.push({name: "admin"})
           })
+          .catch(error => {
+            this.error = error.response.data.error;
+          })
+    },
+    openNotification(position = null, color) {
+        this.$vs.notification({
+        color,
+        position,
+        title: 'Внимание',
+        text: this.error
+      })
+      this.error = null;
     }
   }
 }

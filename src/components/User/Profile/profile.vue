@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="AdminContainer">
     <admin />
-    <vs-table>
+    <vs-table class="TableForm">
       <template #thead>
         <vs-tr>
           <vs-th>
@@ -9,6 +9,9 @@
           </vs-th>
           <vs-th>
             Почта
+          </vs-th>
+          <vs-th>
+            Действия
           </vs-th>
         </vs-tr>
       </template>
@@ -24,6 +27,24 @@
           <vs-td>
             {{ tr.email }}
           </vs-td>
+          <vs-td>
+            <vs-button
+                icon
+                color="rgb(59,222,200)"
+                gradient
+                :active="active == 6"
+            >
+              Редактирование
+            </vs-button>
+            <vs-button
+                icon
+                color="danger"
+                gradient
+                :active="active == 6"
+            >
+              Удалить
+            </vs-button>
+          </vs-td>
         </vs-tr>
       </template>
     </vs-table>
@@ -31,7 +52,7 @@
 </template>
 
 <script>
-import admin from "../../Admin/FormAdmin/FormAdmin"
+import admin from "../../Admin/FormAdmin/FormAdmin";
 import api from "@/components/Auth/JWT/api";
 
 export default {
@@ -46,6 +67,7 @@ export default {
   data: () => {
     return {
       UserOptional: null,
+      active: 0
     }
   },
 
@@ -64,6 +86,13 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="stylus">
+html
+  box-sizing border-box
 
+body
+  margin 0
+
+a
+  text-decoration none
 </style>

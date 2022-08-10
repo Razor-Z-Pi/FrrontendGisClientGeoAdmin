@@ -4,6 +4,7 @@ import auth from '../components/Auth/Login/Login'
 import admin from "../components/Admin/FormAdmin/FormAdmin"
 import register from "../components/Auth/Register/Register"
 import profile from "../components/User/Profile/profile"
+import nopages from "../components/404/nopages"
 
 Vue.use(VueRouter)
 
@@ -31,7 +32,7 @@ const routes = [
   {
     path: "*",
     name: "404",
-    component: auth
+    component: nopages
   }
 ]
 

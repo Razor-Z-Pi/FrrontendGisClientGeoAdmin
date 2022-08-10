@@ -8,8 +8,10 @@
         </vs-button>
       </template>
       <template #right>
-        <vs-button flat>Login</vs-button>
-        <vs-button>Get Started</vs-button>
+        <vs-button @click.prevent="logout" flat>Выйти</vs-button>
+        <vs-avatar>
+          <img src="../../../assets/user.png" width="25" alt="Аватар">
+        </vs-avatar>
       </template>
     </vs-navbar>
     <vs-sidebar
@@ -88,7 +90,7 @@
           <template #icon>
             <img src="../../../assets/user.png" width="25" alt="Профиль"/>
           </template>
-        <router-link to="/profile">Профиль</router-link>
+        <router-link class="LinkStyle" to="/profile">Пользователи</router-link>
       </vs-sidebar-item>
       <template #footer>
         <vs-row justify="space-between">
@@ -106,14 +108,28 @@
 </template>
 
 <script>
+import api from "@/components/Auth/JWT/api";
+
 export default {
   data: () => ({
     active: 'home',
     activeSidebar: false
-  })
+  }),
+  methods: {
+    logout() {
+      api.post("http://127.0.0.1:8000/api/auth/logout")
+          .then(res => {
+            console.log(res);
+            localStorage.removeItem("access_token");
+            this.$router.push({name: "auth"});
+          })
+    }
+  }
 }
 </script>
 
-<style scoped>
-
+<style lang="stylus">
+.LinkStyle
+  text-decoration: none
+  color: #2c3e50
 </style>
