@@ -35,6 +35,19 @@
         </div>
         <div v-if="error">{{openNotification('top-left', 'danger')}}</div>
       </div>
+
+    <template>
+      <div
+          v-if="hasOpenLoading"
+          :class="{ hasOpenLoading  }">
+        <div
+            v-bind:key="i"
+            v-for="(type, i) in types"
+            :ref="`box${i}`"
+            @click="handleClickLoading(type)"
+            class="box-loading" />
+      </div>
+    </template>
   </section>
 </template>
 
@@ -50,23 +63,36 @@ export default {
     password: '',
     remember: false,
     option2: false,
-    error: null
+    error: null,
+    hasOpenLoading: false,
+    types: [
+      'scale'
+    ]
   }),
 
   methods: {
     login() {
+      this.hasOpenLoading = true;
+
       axios.post("http://127.0.0.1:8000/api/auth/login", {
         email: this.email,
         password: this.password
       })
           .then( res => {
+            if (this.option2 === true) {
+              localStorage.setItem("LoginSave", this.email);
+              localStorage.setItem("PasswordSave", this.password);
+            }
+
             localStorage.access_token = res.data.access_token;
             this.$router.push({name: "admin"})
           })
           .catch(error => {
+            this.hasOpenLoading = false;
             this.error = error.response.data.error;
           })
     },
+
     openNotification(position = null, color) {
         this.$vs.notification({
         color,
@@ -76,9 +102,35 @@ export default {
       })
       this.error = null;
     },
+
     Register() {
       this.$router.push({name: 'register'})
+    },
+
+    handleClickLoading(type) {
+      const loading = this.$vs.loading({
+        type
+      })
+      this.hasOpenLoading = true
+      setTimeout(() => {
+        loading.close()
+        this.hasOpenLoading = false
+      }, 3000)
+    },
+
+    openLoading(type, ref) {
+      this.$vs.loading({
+        target: this.$refs[ref][0],
+        text: type,
+        type
+      })
     }
+  },
+
+  mounted() {
+    this.types.forEach((type, i) => {
+      this.openLoading(type, `box${i}`)
+    })
   }
 }
 </script>
@@ -181,4 +233,25 @@ getVar(var)
 
   .vs-button
     margin 0px
+
+
+  .hasOpenLoading
+    .box-loading
+      opacity 0
+      transform scale(.7)
+  .box-loading
+    width 120px
+    height 120px
+    position relative
+    margin 5px
+    border-radius 20px
+    box-shadow 0px 10px 20px -10px rgba(0,0,0,.07)
+    overflow hidden
+    cursor pointer
+    transition all .25s ease
+    &:hover
+      transform translate(0,-5px)
+      box-shadow 0px 15px 20px -10px rgba(0,0,0,.09)
+    >>>.vs-loading
+      padding 0px
 </style>
