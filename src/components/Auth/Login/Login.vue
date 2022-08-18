@@ -29,7 +29,7 @@
             </vs-button>
 
             <div class="new">
-              Нет аккаунта? <a href="#">Создать аккаунт!</a>
+              Нет аккаунта? <a href="#" @click.prevent="Register">Создать аккаунт!</a>
             </div>
           </div>
         </div>
@@ -75,6 +75,9 @@ export default {
         text: this.error
       })
       this.error = null;
+    },
+    Register() {
+      this.$router.push({name: 'register'})
     }
   }
 }

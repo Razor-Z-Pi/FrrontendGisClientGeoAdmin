@@ -43,8 +43,10 @@ const router = new VueRouter({
 router.beforeEach( (to, from, next ) => {
   const accessToken = localStorage.getItem("access_token");
 
-  if (to.name !== "auth") {
-    if (!accessToken) {
+  if (!accessToken) {
+    if (to.name === "auth" || to.name === "register") {
+      return next()
+    } else {
       return next({
         name: "auth"
       })

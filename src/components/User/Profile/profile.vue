@@ -5,6 +5,9 @@
       <template #thead>
         <vs-tr>
           <vs-th>
+            id
+          </vs-th>
+          <vs-th>
             Имя
           </vs-th>
           <vs-th>
@@ -17,10 +20,13 @@
       </template>
       <template #tbody>
         <vs-tr
-            :key="i"
-            v-for="(tr, i) in UserOptional"
+            v-for="tr in UserOptional"
+            :key=tr.id
             :data="tr"
         >
+          <vs-td >
+            {{ tr.id }}
+          </vs-td>
           <vs-td>
             {{ tr.name }}
           </vs-td>
@@ -32,7 +38,8 @@
                 icon
                 color="rgb(59,222,200)"
                 gradient
-                :active="active == 6"
+                :active="activeBtn == 6"
+                @click="active=!active, GetEdit(tr)"
             >
               Редактирование
             </vs-button>
@@ -40,14 +47,55 @@
                 icon
                 color="danger"
                 gradient
-                :active="active == 6"
+                :active="activeBtn == 6"
+                @click="activeDelete=!activeDelete"
             >
               Удалить
             </vs-button>
+
+            <vs-dialog square v-model="activeDelete">
+              <template #header>
+                <h4 class="not-margin">
+                  Удаление!!! Внимание
+                </h4>
+              </template>
+              <template #footer>
+                <div class="footer-dialog">
+                  <vs-button @click="Delete(tr.id)" block>
+                    Удалить
+                  </vs-button>
+                </div>
+              </template>
+            </vs-dialog>
           </vs-td>
         </vs-tr>
       </template>
     </vs-table>
+
+    <vs-dialog square v-model="active">
+      <template #header>
+        <h4 class="not-margin">
+          Редактирование
+        </h4>
+      </template>
+
+      <div class="center content-inputs">
+        <vs-input type="text" v-model="name" placeholder="Имя" />
+      </div>
+
+      <div class="center content-inputs">
+        <vs-input type="email" v-model="email" placeholder="Почта" />
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-button @click="Update" block>
+            Принять
+          </vs-button>
+        </div>
+      </template>
+    </vs-dialog>
+
   </div>
 </template>
 
@@ -67,7 +115,14 @@ export default {
   data: () => {
     return {
       UserOptional: null,
-      active: 0
+      activeBtn: 0,
+      active: false,
+      activeDelete: false,
+      input1: '',
+      input2: '',
+      checkbox1: false,
+      name: "",
+      email: ""
     }
   },
 
@@ -81,6 +136,32 @@ export default {
           .then( res => {
             this.UserOptional = res.data.data
           })
+    },
+
+    Update() {
+      api.put("http://127.0.0.1:8000/api/users", {
+        id: this.id,
+        name: this.name,
+        email: this.email,
+      })
+          .then(res => {
+            console.log(res);
+          })
+    },
+
+    Delete(id) {
+      alert(id);
+      api.delete(`http://127.0.0.1:8000/api/users/${id}`)
+          .then(res => {
+            this.activeDelete = false;
+            console.log(res);
+          })
+    },
+
+    GetEdit(data) {
+      this.id = data.id;
+      this.name = data.name;
+      this.email = data.email;
     }
   }
 }
