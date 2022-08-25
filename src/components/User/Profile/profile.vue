@@ -125,12 +125,17 @@
 
       <template #footer>
         <div class="footer-dialog">
-          <vs-button @click="Update" block>
+          <vs-button @click="Create" block>
             Создать
           </vs-button>
         </div>
       </template>
     </vs-dialog>
+
+    <div v-if="errorTextPut">
+      {{openNotification('bottom-right', 'danger')}}
+    </div>
+
   </div>
 </template>
 
@@ -161,7 +166,8 @@ export default {
       email: "",
       nameCreate: "",
       emailCreate: "",
-      passwordCreate: ""
+      passwordCreate: "",
+      errorTextPut: false
     }
   },
 
@@ -184,6 +190,7 @@ export default {
         email: this.email,
       })
           .then(res => {
+            this.active = false;
             console.log(res);
           })
     },
@@ -197,10 +204,37 @@ export default {
           })
     },
 
+    Create() {
+      if (this.nameCreate === "" || this.emailCreate === "" || this.passwordCreate === "") {
+        this.errorTextPut = true;
+        return;
+      }
+
+      api.post("http://127.0.0.1:8000/api/users/create", {
+        name: this.nameCreate,
+        email: this.emailCreate,
+        password: this.passwordCreate,
+        passwordRemove: this.passwordCreate
+      }).then(res => {
+        console.log(res);
+        this.activeCreate = false;
+      });
+    },
+
     GetEdit(data) {
       this.id = data.id;
       this.name = data.name;
       this.email = data.email;
+    },
+
+    openNotification(position = null, color) {
+        this.$vs.notification({
+        progress: 'auto',
+        color,
+        position,
+        title: 'Внимание',
+        text: `Поля должны быть заполнены`
+      })
     }
   }
 }
