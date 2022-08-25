@@ -8,10 +8,18 @@
         </vs-button>
       </template>
       <template #right>
-        <vs-button @click.prevent="logout" flat>Выйти</vs-button>
+        <vs-tr
+            v-for="optional in UserData"
+            :key=optional.id
+            :data="optional">
+          <vs-td v-if="optional.email === UserEmail">
+            <b>Здравствуй, {{optional.name}}</b>
+          </vs-td>
+        </vs-tr>
         <vs-avatar>
           <img src="../../../assets/user.png" width="25" alt="Аватар">
         </vs-avatar>
+        <vs-button @click.prevent="logout" flat>Выйти</vs-button>
       </template>
     </vs-navbar>
     <vs-sidebar
@@ -26,7 +34,7 @@
         <template #icon>
           <img src="../../../assets/gis.png" width="25" alt="Карта"/>
         </template>
-        Карта
+        <router-link class="LinkStyle" to="/map">Карта</router-link>
       </vs-sidebar-item>
       <vs-sidebar-item id="market">
         <template #icon>
@@ -78,7 +86,7 @@
         <template #icon>
           <i class='bx bxs-donate-heart'></i>
         </template>
-        Статьи
+        <router-link class="LinkStyle" to="/articles">Статьи</router-link>
       </vs-sidebar-item>
       <vs-sidebar-item id="drink">
         <template #icon>
@@ -113,8 +121,15 @@ import api from "@/components/Auth/JWT/api";
 export default {
   data: () => ({
     active: 'home',
-    activeSidebar: false
+    activeSidebar: false,
+    UserData: null,
+    UserEmail: null
   }),
+
+  mounted() {
+    this.getUser()
+  },
+
   methods: {
     logout() {
       api.post("http://127.0.0.1:8000/api/auth/logout")
@@ -123,7 +138,15 @@ export default {
             localStorage.removeItem("access_token");
             this.$router.push({name: "auth"});
           })
-    }
+    },
+
+    getUser() {
+      this.UserEmail = localStorage.getItem("LoginSave");
+      api.get("http://127.0.0.1:8000/api/auth/userOptional")
+          .then( res => {
+            this.UserData = res.data.data
+          })
+    },
   }
 }
 </script>

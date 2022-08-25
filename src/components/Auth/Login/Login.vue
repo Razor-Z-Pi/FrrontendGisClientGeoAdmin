@@ -83,7 +83,7 @@ export default {
               localStorage.setItem("LoginSave", this.email);
               localStorage.setItem("PasswordSave", this.password);
             }
-
+            localStorage.setItem("LoginSave", this.email);
             localStorage.access_token = res.data.access_token;
             this.$router.push({name: "admin"})
           })

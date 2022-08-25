@@ -5,6 +5,8 @@ import admin from "../components/Admin/FormAdmin/FormAdmin"
 import register from "../components/Auth/Register/Register"
 import profile from "../components/User/Profile/profile"
 import nopages from "../components/404/nopages"
+import map from "../components/Map/MapView"
+import articles from  "../components/Articles/articles"
 
 Vue.use(VueRouter)
 
@@ -30,6 +32,16 @@ const routes = [
     component: profile
   },
   {
+    path: "/map",
+    name: "map",
+    component: map
+  },
+  {
+    path: "/articles",
+    name: "articles",
+    component: articles
+  },
+  {
     path: "*",
     name: "404",
     component: nopages
@@ -48,14 +60,14 @@ router.beforeEach( (to, from, next ) => {
       return next()
     } else {
       return next({
-        name: "auth"
+        name: "map"
       })
     }
   }
 
   if (to.name === "auth" && accessToken) {
     return next({
-      name: "admin"
+      name: "map"
     })
   }
 

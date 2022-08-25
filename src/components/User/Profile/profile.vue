@@ -1,6 +1,14 @@
 <template>
   <div class="AdminContainer">
     <admin />
+    <vs-button
+        success
+        flat
+        :active="activeCreate == 1"
+        @click="activeCreate = 1"
+    >
+      Добавить
+    </vs-button>
     <vs-table class="TableForm">
       <template #thead>
         <vs-tr>
@@ -96,6 +104,33 @@
       </template>
     </vs-dialog>
 
+    <vs-dialog square v-model="activeCreate">
+      <template #header>
+        <h4 class="not-margin">
+          Создание пользователя
+        </h4>
+      </template>
+
+      <div class="center content-inputs">
+        <vs-input type="text" v-model="nameCreate" placeholder="Имя" />
+      </div>
+
+      <div class="center content-inputs">
+        <vs-input type="email" v-model="emailCreate" placeholder="Почта" />
+      </div>
+
+      <div class="center content-inputs">
+        <vs-input type="password" v-model="passwordCreate" placeholder="Пароль" />
+      </div>
+
+      <template #footer>
+        <div class="footer-dialog">
+          <vs-button @click="Update" block>
+            Создать
+          </vs-button>
+        </div>
+      </template>
+    </vs-dialog>
   </div>
 </template>
 
@@ -118,11 +153,15 @@ export default {
       activeBtn: 0,
       active: false,
       activeDelete: false,
+      activeCreate: false,
       input1: '',
       input2: '',
       checkbox1: false,
       name: "",
-      email: ""
+      email: "",
+      nameCreate: "",
+      emailCreate: "",
+      passwordCreate: ""
     }
   },
 
