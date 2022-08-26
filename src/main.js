@@ -2,6 +2,7 @@ import Vue from 'vue';
 import App from './App.vue';
 import Vuesax from 'vuesax';
 
+import 'leaflet/dist/leaflet.css';
 import 'vuesax/dist/vuesax.css'; //Vuesax styles
 import router from './router'
 

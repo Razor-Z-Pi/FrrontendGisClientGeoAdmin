@@ -85,7 +85,7 @@ export default {
             }
             localStorage.setItem("LoginSave", this.email);
             localStorage.access_token = res.data.access_token;
-            this.$router.push({name: "admin"})
+            this.$router.push({name: "map"})
           })
           .catch(error => {
             this.hasOpenLoading = false;
