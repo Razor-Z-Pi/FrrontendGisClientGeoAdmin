@@ -22,6 +22,12 @@
             Почта
           </vs-th>
           <vs-th>
+            Роль
+          </vs-th>
+          <vs-th>
+
+          </vs-th>
+          <vs-th>
             Действия
           </vs-th>
         </vs-tr>
@@ -40,6 +46,11 @@
           </vs-td>
           <vs-td>
             {{ tr.email }}
+          </vs-td>
+          <vs-td v-for="role in RoleOptiomal" :key=role.id :data=role>
+            <div v-if="tr.id_role === role.id">
+              {{ role.name }}
+            </div>
           </vs-td>
           <vs-td>
             <vs-button
@@ -155,6 +166,7 @@ export default {
   data: () => {
     return {
       UserOptional: null,
+      RoleOptiomal: null,
       activeBtn: 0,
       active: false,
       activeDelete: false,
@@ -172,7 +184,8 @@ export default {
   },
 
   mounted() {
-    this.getUser()
+    this.getUser(),
+    this.getRole()
   },
 
   methods: {
@@ -180,6 +193,13 @@ export default {
       api.get("http://127.0.0.1:8000/api/auth/userOptional")
           .then( res => {
             this.UserOptional = res.data.data
+          })
+    },
+
+    getRole() {
+      api.get("http://127.0.0.1:8000/api/roles")
+          .then( res => {
+            this.RoleOptiomal = res.data.data
           })
     },
 

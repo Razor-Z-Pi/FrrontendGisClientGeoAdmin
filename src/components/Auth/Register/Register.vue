@@ -49,7 +49,8 @@ export default {
     name: '',
     email: '',
     password: '',
-    passwordRemove: ''
+    passwordRemove: '',
+    id_role: ''
   }),
 
   methods: {
@@ -58,7 +59,8 @@ export default {
         name: this.name,
         email: this.email,
         password: this.password,
-        passwordRemove: this.passwordRemove
+        passwordRemove: this.passwordRemove,
+        id_role: 2
         })
           .then(res => {
             console.log(res);
