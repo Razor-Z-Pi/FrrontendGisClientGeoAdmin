@@ -65,6 +65,7 @@ export default {
     option2: false,
     error: null,
     hasOpenLoading: false,
+    UserRole: null,
     types: [
       'scale'
     ]
@@ -73,7 +74,6 @@ export default {
   methods: {
     login() {
       this.hasOpenLoading = true;
-
       axios.post("http://127.0.0.1:8000/api/auth/login", {
         email: this.email,
         password: this.password
@@ -85,7 +85,16 @@ export default {
             }
             localStorage.setItem("LoginSave", this.email);
             localStorage.access_token = res.data.access_token;
-            this.$router.push({name: "map"})
+
+            for (let item of this.UserRole) {
+              if (item.email === this.email) {
+                if (item.id_role == 1) {
+                  this.$router.push({name: "usermap"})
+                } if (item.id_role == 2) {
+                  this.$router.push({name: "map"})
+                }
+              }
+            }
           })
           .catch(error => {
             this.hasOpenLoading = false;
@@ -124,10 +133,18 @@ export default {
         text: type,
         type
       })
-    }
+    },
+
+    GetUser() {
+      axios.get("http://127.0.0.1:8000/api/roles/user")
+          .then(res => {
+            this.UserRole = res.data.data;
+          })
+    },
   },
 
   mounted() {
+    this.GetUser();
     this.types.forEach((type, i) => {
       this.openLoading(type, `box${i}`)
     })

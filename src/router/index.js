@@ -7,6 +7,8 @@ import profile from "../components/User/Profile/profile"
 import nopages from "../components/404/nopages"
 import map from "../components/Map/MapView"
 import articles from  "../components/Articles/articles"
+import usermap from "../components/Map/usermap"
+import usermain from  "../components/User/Profile/userprofile"
 
 Vue.use(VueRouter)
 
@@ -40,6 +42,16 @@ const routes = [
     path: "/articles",
     name: "articles",
     component: articles
+  },
+  {
+    path: "/usermain",
+    name: "usermain",
+    component: usermain
+  },
+  {
+    path: "/usermap",
+    name: "usermap",
+    component: usermap
   },
   {
     path: "*",
