@@ -28,6 +28,9 @@
 
           </vs-th>
           <vs-th>
+            Регистрация
+          </vs-th>
+          <vs-th>
             Действия
           </vs-th>
         </vs-tr>
@@ -51,6 +54,9 @@
             <div v-if="tr.id_role === role.id">
               {{ role.name }}
             </div>
+          </vs-td>
+          <vs-td>
+            {{ tr.created_at }}
           </vs-td>
           <vs-td>
             <vs-button

@@ -56,6 +56,7 @@ export default {
   data: () => ({
     activeSidebar: false,
     UserData: null,
+    UserEmail: null
   }),
 
   methods: {
@@ -69,11 +70,16 @@ export default {
     },
 
     getUser() {
+      this.UserEmail = localStorage.getItem("LoginSave");
       api.get("http://127.0.0.1:8000/api/auth/userOptional")
           .then( res => {
             this.UserData = res.data.data
           })
     },
+  },
+
+  mounted() {
+    this.getUser();
   }
 }
 </script>
