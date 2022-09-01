@@ -140,6 +140,15 @@
         <vs-input type="password" v-model="passwordCreate" placeholder="Пароль" />
       </div>
 
+      <vs-select placeholder="Роль" v-model="value">
+        <vs-option label="Пользователь" value="1">
+          Пользователь
+        </vs-option>
+        <vs-option label="Администратор" value="2">
+          Администратор
+        </vs-option>
+      </vs-select>
+
       <template #footer>
         <div class="footer-dialog">
           <vs-button @click="Create" block>
@@ -185,7 +194,8 @@ export default {
       nameCreate: "",
       emailCreate: "",
       passwordCreate: "",
-      errorTextPut: false
+      errorTextPut: false,
+      value: "",
     }
   },
 
@@ -231,7 +241,7 @@ export default {
     },
 
     Create() {
-      if (this.nameCreate === "" || this.emailCreate === "" || this.passwordCreate === "") {
+      if (this.nameCreate === "" || this.emailCreate === "" || this.passwordCreate === "" || this.value === "") {
         this.errorTextPut = true;
         return;
       }
@@ -240,7 +250,8 @@ export default {
         name: this.nameCreate,
         email: this.emailCreate,
         password: this.passwordCreate,
-        passwordRemove: this.passwordCreate
+        passwordRemove: this.passwordCreate,
+        id_role: this.value
       }).then(res => {
         console.log(res);
         this.activeCreate = false;
