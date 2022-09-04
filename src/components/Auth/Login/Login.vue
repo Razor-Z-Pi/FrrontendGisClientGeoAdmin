@@ -48,15 +48,30 @@
             class="box-loading" />
       </div>
     </template>
+
+    <template>
+      <VueReCaptcha
+          :sitekey="this.sitekey"
+          :load-recaptcha-script="true"
+          @verify="handleSuccess"
+          @error="handleError"
+      ></VueReCaptcha>
+    </template>
   </section>
 </template>
 
 <script>
 import axios from "axios";
+import { VueReCaptcha } from "vue-recaptcha-v3";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
+
+  components : {
+    VueReCaptcha
+  },
+
   data: () => ({
     active: false,
     email: '',
@@ -64,8 +79,10 @@ export default {
     remember: false,
     option2: false,
     error: null,
+    sitekey: "6LcL5a0hAAAAANIHdfWmxiLvOtei-F3YWBTAhfIG",
     hasOpenLoading: false,
     UserRole: null,
+    stopPush: false,
     types: [
       'scale'
     ]
@@ -74,6 +91,11 @@ export default {
   methods: {
     login() {
       this.hasOpenLoading = true;
+
+      if (!this.stopPush) {
+        return alert("Нужно разблокировать капчу!!!");
+      }
+
       axios.post("http://127.0.0.1:8000/api/auth/login", {
         email: this.email,
         password: this.password
@@ -141,6 +163,14 @@ export default {
             this.UserRole = res.data.data;
           })
     },
+
+    handleSuccess() {
+      this.stopPush = true;
+    },
+
+    handleError() {
+      alert("Не верная капча, попробуйте снова!!!")
+    }
   },
 
   mounted() {
